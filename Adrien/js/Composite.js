@@ -117,19 +117,6 @@ Composite.prototype = {
     }
 
   },
-  //
-  // updateDict:function(){
-  //   this.DICT = [];
-  //   //we calculate on which row we are
-  //   var index = this.y/GRID + 1;
-  //   //index for element in the composite
-  //   var _index = 0;
-  //   for(var i = index;i<index+this.rows;i++){
-  //     //we store the number of element and its index in the allpieces array for a specific row (i) in a dictionnary
-  //     this.DICT[i] =[this.cols,_index];
-  //     _index++;
-  //   }
-  // },
 
   remove:function(key){
       //remove only the piece of the exact line that's recognize as full
