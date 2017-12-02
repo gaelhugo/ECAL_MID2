@@ -37,15 +37,18 @@ class App {
     for (let y = 0; y < this.rows; y++) {
       for (let x = 0; x < this.cols; x++) {
         if (Math.floor(Math.random() * chance) < 1) {
-          let b = new Boule(x * this.dist, y * this.dist, 35, id, this.ctx);
+          let b = new Boule(
+              x * this.dist, y * this.dist, 35, id, this.ctx,
+              this.allBoules.length);
           this.allBoules.push(b);
           this.allBoulesDict[id] = b;
+        } else {
+          // console.log(id);
         }
         id++;
       }
     }
     // connections horizontales
-    let chanceJ = 4;
     for (let i = 0; i < this.allBoules.length; i++) {
       if (this.allBoules[i + 1] != undefined &&
           this.allBoules[i].y == this.allBoules[i + 1].y) {
@@ -53,6 +56,8 @@ class App {
         let junction = new Junction(
             id, this.allBoules[i].x, this.allBoules[i].y,
             this.allBoules[i + 1].x, this.allBoules[i + 1].y, this.ctx);
+        junction.connectedBoules.push(
+            this.allBoules[i].position, this.allBoules[i + 1].position);
         this.allJunctions[id] = junction;
         this.allBoules[i].dict[id] = junction;
         this.allBoules[i + 1].dict[id] = junction;
@@ -61,6 +66,7 @@ class App {
 
 
     // connections verticales
+    // first create a new array organized vertically
     for (let x = 0; x < this.cols; x++) {
       for (let y = 0; y < this.rows; y++) {
         let id = y * this.cols + x;
@@ -69,6 +75,7 @@ class App {
         }
       }
     }
+    // create the vertical connections
     for (let i = 0; i < this.allBoulesVert.length; i++) {
       if (this.allBoulesVert[i + 1] != undefined &&
           this.allBoulesVert[i].x == this.allBoulesVert[i + 1].x) {
@@ -76,9 +83,51 @@ class App {
         let junction = new Junction(
             id, this.allBoulesVert[i].x, this.allBoulesVert[i].y,
             this.allBoulesVert[i + 1].x, this.allBoulesVert[i + 1].y, this.ctx);
+        junction.connectedBoules.push(
+            this.allBoules[i].position, this.allBoules[i + 1].position);
         this.allJunctions[id] = junction;
         this.allBoulesVert[i].dict[id] = junction;
         this.allBoulesVert[i + 1].dict[id] = junction;
+      }
+    }
+
+    // remove some connections
+    let chanceJ = 4;
+    for (let junction in this.allJunctions) {
+      if (this.allJunctions.hasOwnProperty(junction)) {
+        // try to delete
+        if (Math.floor(Math.random() * chanceJ) < 1) {
+          // check all connected allBoules
+          // if they have more that one connections
+          let cb = this.allJunctions[junction].connectedBoules;
+          for (let i = 0; i < cb.length; i++) {
+            // check connection length for that ball
+            let b = this.allBoules[cb[i]];
+            let connections = Object.keys(b.dict);
+            // console.log(connections, connections.length, junction);
+            if (connections.length > 1 && b.dict[junction] &&
+                this.allJunctions[junction]) {
+              // delete this.allJunctions[junction];
+              // delete b.dict[junction];
+              this.allJunctions[junction].deletable = true;
+            } else {
+              this.allJunctions[junction].deletable = false;
+            }
+          }
+        }
+      }
+    }
+    for (let junction in this.allJunctions) {
+      if (this.allJunctions.hasOwnProperty(junction)) {
+        if (this.allJunctions[junction].deletable) {
+          // console.log('to delete');
+          let cb = this.allJunctions[junction].connectedBoules;
+          for (let i = 0; i < cb.length; i++) {
+            let b = this.allBoules[cb[i]];
+            delete b.dict[junction];
+          }
+          delete this.allJunctions[junction];
+        }
       }
     }
 
@@ -95,7 +144,6 @@ class App {
         this.allJunctions[junction].draw();
       }
     }
-
     for (let i = 0; i < this.allBoules.length; i++) {
       this.allBoules[i].draw();
     }
@@ -112,17 +160,19 @@ class App {
 
 
 class Boule {
-  constructor(x, y, r, id, ctx) {
+  constructor(x, y, r, id, ctx, position) {
     this.x = x;
     this.y = y;
     this.r = r;
     this.ctx = ctx;
     this.id = id;
+    this.position = position;
     this.dict = {};
   }
   draw() {
+    let d = Object.keys(this.dict);
     this.ctx.strokeStyle = 'black';
-    this.ctx.fillStyle = 'white';
+    this.ctx.fillStyle = (d.length == 0) ? 'red' : 'white';
     this.ctx.beginPath();
     this.ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, false);
     this.ctx.fill();
@@ -139,9 +189,11 @@ class Junction {
     this.x1 = x1;
     this.y1 = y1;
     this.ctx = ctx;
+    this.connectedBoules = [];
+    this.deletable = false;
   }
   draw() {
-    this.ctx.strokeStyle = 'black';
+    this.ctx.strokeStyle = (this.deletable) ? 'red' : 'black';
     this.ctx.beginPath();
     this.ctx.moveTo(this.x, this.y);
     this.ctx.lineTo(this.x1, this.y1);
