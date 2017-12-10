@@ -28,10 +28,15 @@ class App {
     this.cols = 12;
     this.rows = 7;
     this.dist = 100;
+    this.launch();
+    this.draw();
+  }
+  launch() {
     this.allBoules = [];
     this.allBoulesDict = {};
     this.allBoulesVert = [];
     this.allJunctions = {};
+    this.bouleWatcher = {};
     let chance = 2;
     let id = 0;
     for (let y = 0; y < this.rows; y++) {
@@ -52,7 +57,7 @@ class App {
     for (let i = 0; i < this.allBoules.length; i++) {
       if (this.allBoules[i + 1] != undefined &&
           this.allBoules[i].y == this.allBoules[i + 1].y) {
-        let id = i + ',' + (i + 1);
+        let id = this.allBoules[i].id + ',' + this.allBoules[i + 1].id;
         let junction = new Junction(
             id, this.allBoules[i].x, this.allBoules[i].y,
             this.allBoules[i + 1].x, this.allBoules[i + 1].y, this.ctx);
@@ -120,19 +125,73 @@ class App {
     for (let junction in this.allJunctions) {
       if (this.allJunctions.hasOwnProperty(junction)) {
         if (this.allJunctions[junction].deletable) {
-          // console.log('to delete');
           let cb = this.allJunctions[junction].connectedBoules;
           for (let i = 0; i < cb.length; i++) {
-            let b = this.allBoules[cb[i]];
-            delete b.dict[junction];
+            if (this.allBoules[cb[i]] != undefined) {
+              let b = this.allBoules[cb[i]];
+              delete b.dict[junction];
+              let d = Object.keys(b.dict);
+              if (d.length == 0) {
+                console.log('REMOVE SOLO');
+                this.allBoules.splice(cb[i], 1);
+                delete this.allBoulesDict[b.id];
+              }
+            }
           }
           delete this.allJunctions[junction];
         }
       }
     }
 
+    // pick up random ball
+    // and watch propagation
+    this.startBall =
+        this.allBoules[Math.floor(Math.random() * this.allBoules.length)];
+    setTimeout(
+        (function() {
+          this.launchPropagation(this.startBall);
+        }).bind(this),
+        100);
+  }
 
-    this.draw();
+
+  launchPropagation(boule) {
+    boule.color = 'pink';
+    this.bouleWatcher[boule.id] = boule;
+
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(this.checkEndPropagation.bind(this), 100);
+    for (let connection in boule.dict) {
+      let IDS = connection.split(',');
+      let count = 0;
+      for (let i = 0; i < IDS.length; i++) {
+        if (IDS[i] != boule.id && this.bouleWatcher[IDS[i]] == undefined &&
+            this.allBoulesDict[IDS[i]] != undefined) {
+          count++;
+          setTimeout(
+              (function() {
+                let _boule = this.allBoulesDict[IDS[i]];
+                this.launchPropagation(_boule);
+              }).bind(this),
+              10);
+        }
+      }
+    }
+  }
+
+  checkEndPropagation() {
+    console.log('END !!');
+    // check dict length and all balls
+    let _dict = Object.keys(this.bouleWatcher);
+    if (_dict.length == this.allBoules.length) {
+      console.log('GOOD');
+      // GAME START HERE .....
+
+    } else {
+      console.log('problem');
+      console.log(_dict);
+      this.launch();
+    }
   }
 
   draw() {
@@ -144,6 +203,7 @@ class App {
         this.allJunctions[junction].draw();
       }
     }
+    //
     for (let i = 0; i < this.allBoules.length; i++) {
       this.allBoules[i].draw();
     }
@@ -168,16 +228,20 @@ class Boule {
     this.id = id;
     this.position = position;
     this.dict = {};
+    this.color = 'white';
+    // this.ctx.font = '10px Arial';
   }
   draw() {
     let d = Object.keys(this.dict);
     this.ctx.strokeStyle = 'black';
-    this.ctx.fillStyle = (d.length == 0) ? 'red' : 'white';
+    this.ctx.fillStyle = (d.length == 0) ? 'red' : this.color;
     this.ctx.beginPath();
     this.ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, false);
     this.ctx.fill();
     this.ctx.stroke();
     this.ctx.closePath();
+    // this.ctx.fillStyle = 'black';
+    // this.ctx.fillText(this.id, this.x, this.y);
   }
 }
 
