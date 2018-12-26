@@ -1,0 +1,21 @@
+html,body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#detected{
+    position:absolute;
+    display: none;
+    text-align: center;
+    font-size: 40px;
+    font-weight: 500;
+    color: red;
+    z-index: 1;
+}
+
+#canvas{
+    position:absolute;
+    top:0px;
+    left:0px;
+}
