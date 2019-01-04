@@ -65,7 +65,6 @@ function Triangle(x, y, r) {
 };
 
 Triangle.prototype.getExoCenters = function() {
-  let exoCenters = [];
   for (let i = 0; i < 3; i++) {
     let xDist = this.newPoints[i].x - this.centroid.x;
     let yDist = this.newPoints[i].y - this.centroid.y;
