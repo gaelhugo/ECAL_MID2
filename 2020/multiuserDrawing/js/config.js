@@ -1,5 +1,5 @@
 // Initialize Firebase
-const config = {
+var config = {
   apiKey: 'AIzaSyBCboafcPQ_3ZRI1Sf_00MSpl_SURHWnOI',
   authDomain: 'jeudiecal.firebaseapp.com',
   databaseURL: 'https://jeudiecal.firebaseio.com',
