@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <title>PONG</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .grid{
+                width:370px;
+            }
+            .grid.hidden{
+                display:none;
+            }
+            button{
+                width:80px;
+                height:80px;
+                margin:20px;
+                font-size:50px;
+                cursor: pointer;
+                user-select: none;
+            }
+            .message{
+                 font-size:50px;
+                 font-family: sans-serif;
+                 font-weight: bold;
+            }
+            .message.hidden{
+                 display:none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="message">MESSAGE</div>
+        <div class="grid">
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>4</button>
+            <button>5</button>
+            <button>6</button>
+            <button>7</button>
+            <button>8</button>
+            <button>9</button>
+            <button>0</button>
+        </div>
+        <script src="js/module.js" type="module"></script>
+    </body>
+</html>
