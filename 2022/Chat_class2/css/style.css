@@ -11,7 +11,6 @@ body {
 .bubble_wrapper {
   position: absolute;
   width: 100%;
-  /* background: rgba(255, 0, 255, 0.5); */
   height: 90%;
   overflow-y: scroll;
 }
@@ -63,7 +62,6 @@ body {
   border-radius: 100px;
   margin: 10px;
   background-color: lightskyblue;
-  /* align-self: flex-end; */
 }
 .bubble.right {
   position: relative;
