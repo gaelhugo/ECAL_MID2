@@ -1,0 +1,6 @@
+node_modules
+certificate.cert 
+certificate.key 
+package-lock.json 
+.parcel-cache
+dist
