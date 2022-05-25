@@ -12,6 +12,11 @@ export default class App extends Playground {
     this.speed = 0.001;
     this.allShapes = [];
 
+    const query = window.location.search;
+    const urlParams = new URLSearchParams(query);
+    this.page = urlParams.get("page") || 0;
+    // console.log(this.page);
+
     /**
      *  LOAD ALL SHAPES WITH FIREBASE PARAMETERS
      */
@@ -19,13 +24,84 @@ export default class App extends Playground {
     // 217
     // console.log(Math.sqrt(217));
 
+    const ObjectFirebase = {
+      asdf1élkj: { val2: 0.32, val3: 0.56 },
+      asdfé2lkj: { val2: 0.32, val3: 0.56 },
+      asdf2élkj: { val2: 0.32, val3: 0.56 },
+      asdfél3kj: { val2: 0.32, val3: 0.56 },
+      asd4félkj: { val2: 0.32, val3: 0.56 },
+      asd5félkj: { val2: 0.32, val3: 0.56 },
+      asd6félkj: { val2: 0.32, val3: 0.56 },
+      asd7félkj: { val2: 0.32, val3: 0.56 },
+      asdf8élkj: { val2: 0.32, val3: 0.56 },
+      as9dfélkj: { val2: 0.32, val3: 0.56 },
+      as1dfélkj: { val2: 0.32, val3: 0.56 },
+      asd2félkj: { val2: 0.32, val3: 0.56 },
+      as1dfwélkj: { val2: 0.32, val3: 0.56 },
+      asdf2élkdj: { val2: 0.32, val3: 0.56 },
+      as7dfél4kj: { val2: 0.32, val3: 0.56 },
+      asd23félkj: { val2: 0.32, val3: 0.56 },
+      asdf5élkj: { val2: 0.32, val3: 0.56 },
+      asdfél8kj: { val2: 0.32, val3: 0.56 },
+      asdf2élkj: { val2: 0.32, val3: 0.56 },
+      ashdfélkj: { val2: 0.32, val3: 0.56 },
+      asdqfélkj: { val2: 0.32, val3: 0.56 },
+      asdffélkj: { val2: 0.32, val3: 0.56 },
+      asdfsélkj: { val2: 0.32, val3: 0.56 },
+      asdfélkj: { val2: 0.32, val3: 0.56 },
+      asdfélkmj: { val2: 0.32, val3: 0.56 },
+      asadfélkj: { val2: 0.32, val3: 0.56 },
+      asydfvélkj: { val2: 0.32, val3: 0.56 },
+      asdfyélkj: { val2: 0.32, val3: 0.56 },
+      asydfélkj: { val2: 0.32, val3: 0.56 },
+      asdyfélkj: { val2: 0.32, val3: 0.56 },
+      asdfélkkj: { val2: 0.32, val3: 0.56 },
+      asdjfélkj: { val2: 0.32, val3: 0.56 },
+      asdsfélkj: { val2: 0.32, val3: 0.56 },
+      asdsfélkj: { val2: 0.32, val3: 0.56 },
+      asdféklkj: { val2: 0.32, val3: 0.56 },
+      a11sdfélkj: { val2: 0.32, val3: 0.56 },
+      asd22félkj: { val2: 0.32, val3: 0.56 },
+      t7: { val2: 0.32, val3: 0.56 },
+      aszzdfélkj: { val2: 0.32, val3: 0.56 },
+      asdfélookj: { val2: 0.32, val3: 0.56 },
+    };
+
+    const keys = Object.keys(ObjectFirebase);
+
+    const col = 4;
+    const li = 4;
+
+    const limit = col * li;
+    const depart = this.page * limit;
+    const arrivee = depart + limit;
+    let x = 0;
+    let y = 0;
     let name = 0;
-    for (let j = 0; j < 15; j++) {
-      for (let i = 0; i < 15; i++) {
-        this.allShapes.push(new Shape(i * 60 + 60, j * 60 + 60, 30, 30, name));
-        name++;
+    keys.forEach((key, index) => {
+      if (index >= depart && index < arrivee) {
+        if (y < li) {
+          this.allShapes.push(
+            new Shape(x * 60 + 60, y * 60 + 60, 30, 30, name)
+          );
+          x++;
+          if (x % col == 0) {
+            x = 0;
+            y++;
+          }
+          name++;
+        }
       }
-    }
+    });
+
+    // let name = 0;
+    // for (let j = 0; j < 4; j++) {
+    //   for (let i = 0; i < 4; i++) {
+    //     this.allShapes.push(new Shape(i * 60 + 60, j * 60 + 60, 30, 30, name));
+    //     name++;
+    //   }
+    // }
+
     document.addEventListener("click", this.handler.click);
 
     // search box
@@ -60,6 +136,9 @@ export default class App extends Playground {
       } else {
         this.changeFocus(nearest);
       }
+    }
+    if (e.keyCode == "13") {
+      console.log("spacebar");
     }
   }
 
