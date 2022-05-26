@@ -6,6 +6,8 @@ export default class App extends Playground {
     this.handler = {
       click: this.onClick.bind(this),
       keydown: this.onKeyDown.bind(this),
+      next: this.onNext.bind(this),
+      prev: this.onPrev.bind(this),
     };
     this.zoom = 1;
     this.zoomGoal = 1;
@@ -67,25 +69,23 @@ export default class App extends Playground {
       asdfélookj: { val2: 0.32, val3: 0.56 },
     };
 
-    const keys = Object.keys(ObjectFirebase);
-
-    const col = 4;
-    const li = 4;
-
-    const limit = col * li;
+    this.keys = Object.keys(ObjectFirebase);
+    this.col = 4;
+    this.li = 4;
+    const limit = this.col * this.li;
     const depart = this.page * limit;
     const arrivee = depart + limit;
     let x = 0;
     let y = 0;
     let name = 0;
-    keys.forEach((key, index) => {
+    this.keys.forEach((key, index) => {
       if (index >= depart && index < arrivee) {
-        if (y < li) {
+        if (y < this.li) {
           this.allShapes.push(
             new Shape(x * 60 + 60, y * 60 + 60, 30, 30, name)
           );
           x++;
-          if (x % col == 0) {
+          if (x % this.col == 0) {
             x = 0;
             y++;
           }
@@ -114,6 +114,18 @@ export default class App extends Playground {
     );
     document.body.appendChild(search);
     search.addEventListener("keydown", this.handler.keydown);
+    //nav button
+    const buttons = document.createElement("div");
+    buttons.classList.add("buttons");
+    const prev = document.createElement("button");
+    prev.textContent = "<";
+    buttons.appendChild(prev);
+    prev.addEventListener("click", this.handler.prev);
+    const next = document.createElement("button");
+    next.textContent = ">";
+    buttons.appendChild(next);
+    next.addEventListener("click", this.handler.next);
+    document.body.appendChild(buttons);
 
     this.draw();
   }
@@ -137,8 +149,21 @@ export default class App extends Playground {
         this.changeFocus(nearest);
       }
     }
-    if (e.keyCode == "13") {
-      console.log("spacebar");
+  }
+
+  onPrev(e) {
+    e.preventDefault();
+    if (this.page > 0) {
+      this.page--;
+      document.location.href = `?page=${this.page}`;
+    }
+  }
+  onNext(e) {
+    e.preventDefault();
+    const max = Math.floor(this.keys.length / (this.col * this.li));
+    if (this.page < max) {
+      this.page++;
+      document.location.href = `?page=${this.page}`;
     }
   }
 
@@ -159,7 +184,7 @@ export default class App extends Playground {
   }
 
   onClick(e) {
-    if (e.target.tagName == "INPUT") {
+    if (e.target.tagName == "INPUT" || e.target.tagName == "BUTTON") {
     } else {
       if (this.zoomGoal != 1) {
         this.zoomGoal = 1;
