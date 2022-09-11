@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+  <title>AdaFruit IO HTTP Send</title>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+</head>
+<body>
+
+    <input type="text" id="mydata" value="0"> <button id="send">SEND</button><br/>
+
+    <button id="get">GET</button><br/>
+    <input type="text" id="default" value="0">
+
+    <script type="text/javascript">
+
+
+    $("#send").click( () => {
+      sendData();
+    } );
+
+    $("#get").click( () => {
+      getData();
+    } );
+
+    var username = 'gaelhugo';
+    var feed = 'test';
+    var url = "https://io.adafruit.com/api/v2/"+username+"/feeds/"+feed+"/data";
+    var aio_key = '86296bca4c8d469f8650a8605648cf6e';
+
+    function sendData(){
+
+
+      var mydata = $("#mydata").val();
+
+      $.ajax({
+              headers: {'X-AIO-Key': aio_key },
+              method: "POST",
+              data: { value: mydata },
+              url: url,
+              success: function (){
+                alert('Thanks for your data!');
+              }
+          });
+      }
+
+      function getData(){
+        var mydata = $("#mydata").val();
+
+        $.ajax({
+                headers: {'X-AIO-Key': aio_key },
+                method: "GET",
+                url: url,
+                success: function (data){
+                  console.log(data);
+                }
+            });
+        }
+
+
+        $.ajax({
+                headers: {'X-AIO-Key': aio_key },
+                method: "GET",
+                url: "https://io.adafruit.com/api/v2/"+username+"/feeds/test/data",
+                success: function (data){
+                  console.log(data[0]);
+                 $("#default").val(data[0].value);
+                }
+            });
+
+    </script>
+
+
+</body>
+</html>

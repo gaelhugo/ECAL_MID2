@@ -1,0 +1,100 @@
+<html>
+
+<head>
+	<title>EMOJI</title>
+	<link rel="stylesheet" href="emoji-panel/emojipanel.css">
+	<script src="emoji-panel/emojipanel.js"></script>
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  	<style>
+  		body{
+  			font-family: sans-serif;
+  			color: lightgray;
+  			display: flex;
+  			justify-content: center;
+  			align-items: center;
+  		}
+  		#container{
+  			display: flex;
+  			justify-content: center;
+  			align-items: center;
+  			flex-direction: column;
+  		}
+  		.holder{
+  			width: 80px;
+  			height: 80px;
+  			display: flex;
+		    justify-content: center;
+		    align-items: center;
+		    font-size: 36pt;
+		    border: 1px solid lightgray;
+		    border-radius: 10%;
+		    margin-bottom: 20px;
+
+  		}
+  		.question{
+  			font-size: 130%;
+  			margin-bottom: 30px;
+  		}
+  		.EmojiPanel__brand, .EmojiPanel__queryInput{
+  			display: none;
+  		}
+
+	</style>
+</head>
+
+<body>
+
+	<div id="container">
+		<div class="holder"></div>
+		<div class="question">HOW DO YOU FEEL</div>
+	</div>
+
+
+	<script>
+
+        window.onload = () => {
+
+            function sendFeels(emoji_val,category){
+
+	            var aio_key = '86296bca4c8d469f8650a8605648cf6e';//'1234';
+	            var group = 'Default';
+	            var feed = 'emoji';
+
+              var send_val = '{"emoji":"'+emoji_val+'","category":"'+category+'"}';
+
+	            var url = "https://io.adafruit.com/api/groups/" + group + "/send.json?x-aio-key=" + aio_key + "&" + feed + "=" + send_val;
+
+
+	            $.ajax({
+			  		method: "GET",
+			  		url: url
+				});
+            }
+
+
+            // create teh emoji panel
+            var home = new EmojiPanel({
+                container: '#container',
+                pack_url: 'emoji-panel/img/twemoji.svg'
+            });
+
+            // create listener for when emoji selected
+            home.addListener('select', emoji => {
+
+                console.log(emoji);
+
+                $(".holder").text(emoji.char);
+                sendFeels(emoji.name,emoji.category);
+
+            });
+
+
+
+        };
+
+
+	</script>
+</body>
+
+</html>
