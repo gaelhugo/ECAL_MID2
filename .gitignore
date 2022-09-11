@@ -1,3 +1,15 @@
 node_modules
 ./*/node_modules
 ./*/*/node_modules
+
+*.DS_Store
+.parcel-cache
+.vscode
+.cache
+.babelrc
+.parcelrc
+.proxyrc.js
+certificate.*
+package-lock.json
+dist
+.eslintrc.json
