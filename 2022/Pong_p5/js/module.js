@@ -32,13 +32,13 @@ const DATABASE = getDatabase();
 // pour enregistrer des valeurs
 window.send = (objet) => {
   //ecriture dans la base de donnee
-  const pathToWrite = ref(DATABASE, "test");
+  const pathToWrite = ref(DATABASE, "coordonnee");
   set(pathToWrite, objet);
 };
 
 //
 //écouteur (Compatible P5)
-const path = ref(DATABASE, "test");
+const path = ref(DATABASE, "coordonnee");
 window.newValue = false;
 window.firebaseValue = null;
 let firstShot = false;

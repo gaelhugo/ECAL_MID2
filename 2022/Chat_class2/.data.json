@@ -1,0 +1,24 @@
+{
+  "botMessages": [
+    { "message": "Help me!" },
+    { "message": "You seem to be lost in your code !" },
+    { "message": "Did you write chinese or Javascript ?" },
+    { "message": "Where is your listener ?" },
+    { "message": "You should have made a CLASS for that" },
+    { "message": "Your code be like 🍝" },
+    { "message": "What are your doing here ? 🤦" },
+    { "message": "Please call Dan Shiffman" },
+    { "message": "Don't hope your const will change" },
+    { "message": "I can't find the end of your parenthesis" },
+    { "message": "Your Javascript hurts so badly" },
+    { "message": "Indentation is not your style" },
+    { "message": "Did your brain lost connection with FIREBASE?" },
+    { "message": "You're following the wrong tutorial" },
+    { "message": "100% not optimized code" },
+    { "message": "Fuck it, put that variable global" },
+    { "message": "Did you put that damned BIND ?" },
+    { "message": "Stop coding right now, get a life" },
+    { "message": "It was working 5 minutes ago" },
+    { "message": "It's not a bug, it' a feature" }
+  ]
+}

@@ -1,20 +1,15 @@
 {
   "dependencies": {
-    "@chriscourses/perlin-noise": "^1.0.5",
     "@onemorestudio/playgroundjs": "^1.0.0",
-    "babel-plugin-transform-remove-console": "^6.9.4",
-    "circumcenter": "^1.0.0",
+    "firebase": "^9.1.3",
     "parcel": "*",
-    "parcel-reporter-static-files-copy": "^1.3.0",
-    "three": "^0.137.5",
-    "triangle-centroid": "^1.0.0",
-    "triangle-incenter": "^1.0.2"
+    "parcel-reporter-static-files-copy": "^1.3.0"
   },
-  "name": "NodeDemo",
+  "name": "Chat_class",
   "version": "1.0.0",
   "devDependencies": {},
   "scripts": {
-    "start": "rm -rf dist && parcel index.html --port 80 --open",
+    "start": "rm -rf dist && parcel index.html --port 80 --open --host 0.0.0.0",
     "start-https": "rm -rf dist && parcel index.html --cert certificate.cert --key certificate.key --port 80 --open",
     "build": "rm -rf dist && parcel build index.html"
   },

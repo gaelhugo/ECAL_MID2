@@ -1,8 +1,8 @@
 export default class Wheel {
   constructor(parent = null, dist = 0) {
     this.parent = parent;
-    this.speed = 0;
-    this.angle = 0;
+    this.speed = { x: 0, y: 0 };
+    this.angle = { x: 0, y: 0 };
     this.dist = 100;
 
     if (!this.parent) {
@@ -16,8 +16,8 @@ export default class Wheel {
   }
 
   update() {
-    const deplacementX = Math.cos((this.angle * Math.PI) / 180) * this.dist;
-    const deplacementY = Math.sin((this.angle * Math.PI) / 180) * this.dist;
+    const deplacementX = Math.cos((this.angle.x * Math.PI) / 180) * this.dist;
+    const deplacementY = Math.sin((this.angle.y * Math.PI) / 180) * this.dist;
 
     // if (this.x) {
     if (!this.parent) {
@@ -32,7 +32,8 @@ export default class Wheel {
     }
     // }
 
-    this.angle += this.speed;
+    this.angle.x += this.speed.x;
+    this.angle.y += this.speed.y;
     // console.log(this.angle);
   }
 

@@ -1,16 +1,12 @@
 {
   "dependencies": {
-    "@chriscourses/perlin-noise": "^1.0.5",
     "@onemorestudio/playgroundjs": "^1.0.0",
     "babel-plugin-transform-remove-console": "^6.9.4",
-    "circumcenter": "^1.0.0",
+    "firebase": "^9.6.10",
     "parcel": "*",
-    "parcel-reporter-static-files-copy": "^1.3.0",
-    "three": "^0.137.5",
-    "triangle-centroid": "^1.0.0",
-    "triangle-incenter": "^1.0.2"
+    "parcel-reporter-static-files-copy": "^1.3.0"
   },
-  "name": "NodeDemo",
+  "name": "SaveData",
   "version": "1.0.0",
   "devDependencies": {},
   "scripts": {

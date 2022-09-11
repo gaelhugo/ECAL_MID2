@@ -1,0 +1,20 @@
+{
+  "name": "nodedemoprime",
+  "version": "1.0.0",
+  "description": "Demo pour les étudiants",
+  "scripts": {
+    "start": "parcel index.html --open",
+    "build": "parcel build index.html"
+  },
+  "keywords": [
+    "js",
+    "experimental"
+  ],
+  "author": "moi",
+  "license": "ISC",
+  "dependencies": {
+    "@onemorestudio/quadtreejs": "^1.0.0",
+    "parcel": "^2.3.1",
+    "three": "^0.137.5"
+  }
+}
