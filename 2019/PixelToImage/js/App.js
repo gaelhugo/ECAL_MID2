@@ -2,9 +2,9 @@ let PX;
 // GRID SPACE
 let SPACE = 5;
 // 0.5 - 0.01 , the bigger the faster
-let LERP_FACTOR = 0.1;
+let LERP_FACTOR = 0.09;
 // IMAGES TO BE ANALYZED
-let IMAGES = ['image1.png', 'opi.png'];
+let IMAGES = ['image1.png', 'opi.png', 'nell.jpg'];
 let SCREEN_DIMENSIONS = {'width': 768, 'height': 1024};
 /**
  * PARTICLE_AMOUNT
@@ -126,7 +126,7 @@ class App {
           let green = imageData.data[index + 1];
           let blue = imageData.data[index + 2];
           let brightness = Math.round(red * 0.3 + green * 0.59 + blue * 0.11);
-          if (brightness < 50) {
+          if (brightness < 75) {
             let blackPixel = this.blackPixels.shift();
             blackPixel.positions[i].x = x;
             blackPixel.positions[i].y = y;

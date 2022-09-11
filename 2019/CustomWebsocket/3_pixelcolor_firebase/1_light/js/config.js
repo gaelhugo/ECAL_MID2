@@ -1,11 +1,11 @@
 // Initialize Firebase
 var config = {
-  apiKey: '',
+  apiKey: 'AIzaSyBZmYMCRP-QYJreT2tLSbe3TTOqTYBAgLg',
   authDomain: 'nrd-light.firebaseapp.com',
   databaseURL: 'https://nrd-light.firebaseio.com',
   projectId: 'nrd-light',
   storageBucket: 'nrd-light.appspot.com',
-  messagingSenderId: ''
+  messagingSenderId: '556896552819'
 };
 firebase.initializeApp(config);
 
@@ -16,6 +16,6 @@ firebase.initializeApp(config);
 //   }
 // });
 
-firebase.auth().signInAnonymously().catch(function(error) {
-  console.log(error.message);
+firebase.auth().signInAnonymously().catch(function (error) {
+    console.log(error.message);
 });

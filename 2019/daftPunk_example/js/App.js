@@ -6,7 +6,7 @@ class App {
     this.counter = 0;
     this.UID = '_' + Math.random().toString(36).substr(2, 9);
     this.master = false;
-    this.IP = '10.192.232.123';
+    this.IP = '10.192.232.135';
     this.listen();
     this.collection = [
       'WorkIt1.mp3',   'MakeIt1.mp3', 'DoIt1.mp3',   'MakesUs1.mp3',

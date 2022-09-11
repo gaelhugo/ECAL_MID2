@@ -5,7 +5,7 @@ class App {
     this.database = firebase.database();
     this.counter = 0;
     this.listen();
-    // this.launch();
+    this.launch();
     this.initDrawing();
   }
 
@@ -20,8 +20,13 @@ class App {
     this.ctx.strokeStyle = 'white';
     this.ctx.fillRect(0, 0, this.w, this.h);
     this.isDrawing = false;
-    this.color = Math.random() * 0xffffff;
-
+    // this.color = Math.random() * 0xffffff;
+    this.color = {
+      'r': Math.round(Math.random() * 255),
+      'g': Math.round(Math.random() * 255),
+      'b': Math.round(Math.random() * 255),
+    };
+    console.log(this.color, typeof (this.color));
     this.canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
     this.canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
     this.canvas.addEventListener('mouseup', this.onMouseUp.bind(this));
@@ -44,7 +49,8 @@ class App {
   onMouseUp(e) {
     this.isDrawing = false;
     // this.ctx.closePath();
-    this.database.ref('DRAWINGS/' + this.UID).set(null);
+    // this.database.ref('DRAWINGS/' + this.UID).set(null);
+    this.send('DRAWINGS/' + this.UID, null);
   }
 
   // draw(){
@@ -72,7 +78,9 @@ class App {
                          if (points.length >= 2) {
                            this.ctx.beginPath();
                            let p = this.drawings[drawing][points[0]].data;
-                           this.ctx.strokeStyle = p.color;
+                           let color = 'rgb(' + p.color.r + ',' + p.color.g +
+                               ',' + p.color.b + ')';
+                           this.ctx.strokeStyle = color;
                            this.ctx.moveTo(p.x, p.y);
                            for (let point in this.drawings[drawing]) {
                              let _p = this.drawings[drawing][point].data;
