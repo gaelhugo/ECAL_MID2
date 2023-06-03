@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "@onemorestudio/playgroundjs": "^1.0.8",
+    "firebase": "^9.1.0",
+    "parcel": "*",
+    "parcel-reporter-static-files-copy": "^1.3.0"
+  },
+  "name": "testplayground",
+  "version": "1.0.0",
+  "devDependencies": {},
+  "scripts": {
+    "start": "rm -rf dist && parcel index.html --port 8080 --open",
+    "start-https": "rm -rf dist && parcel index.html --cert certificate.cert --key certificate.key --port 80 --open",
+    "build": "rm -rf dist && parcel build index.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
